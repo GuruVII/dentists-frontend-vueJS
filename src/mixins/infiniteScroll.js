@@ -11,17 +11,19 @@ const infiniteScroll = {
 			//if the screen is 200px from the edge or if the page jsut started (thus offset is 0), do the code
 			if ((window.innerHeight + scrollTop) > (document.body.offsetHeight - 200)){
 				let i = 0;
-				let entry;
+				let index;
 				//this loops pushes data from the tempArray to the masterArray, while accounting for how far we've gone though the tempArray
 				do {	
-					entry = this.infiniteScrollPage * this.infiniteScrollPerPage + i
+					index = this.infiniteScrollPage * this.infiniteScrollPerPage + i
 					i++
-					//console.log(entry)
-					if (this.tempArray[entry] != undefined){
-						this.masterArray.push(this.tempArray[entry])
+					//these are the conditions which need to be met if we want another entry pushed into the masterArray. 
+					//The part after || is there to catch the occasion when tempArray is shorter than 100 entries
+					if ((this.tempArray[index] != undefined && (this.tempArray.length < 100 && ((this.masterArray.length%100) < this.tempArray.length)))){
+						this.masterArray.push(this.tempArray[index])
 					}
 					else {
-						window.removeEventListener('scroll', () => {this.infiniteScroll(this.infiniteScrollPerPage)})
+						console.log("it went here")
+						window.removeEventListener('scroll', this.infiniteScroll)
 						return
 					};
 

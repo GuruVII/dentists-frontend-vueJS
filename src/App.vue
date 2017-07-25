@@ -33,8 +33,7 @@ export default {
   },
   methods: {
     scrolling: function(){
-                console.log("scrolling powah")
-                window.addEventListener('scroll', () => {this.infiniteScroll(this.infiniteScrollPerPage)});
+                window.addEventListener('scroll', this.infiniteScroll);
             }
   },
   mixins: [getData, infiniteScroll],
@@ -42,6 +41,8 @@ export default {
     //oe, offset, maxAvg,type,sortColumn, orderBy
     this.getData("all", this.infiniteScrollCurrentOffset, 100, "404101+404103", "id", "ASC");
     this.scrolling();
+
+    console.log()
   }
 }
 </script>
