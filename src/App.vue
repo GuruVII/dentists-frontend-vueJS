@@ -23,12 +23,19 @@ export default {
   name: 'app',
   data() {
     return {
-      infiniteScrollCurrentOffset:100,
+      infiniteScrollCurrentOffset:0,
       infiniteScrollOffset: 100,
       infiniteScrollPage: 0,
       infiniteScrollPerPage: 20, //how many items are loaded per page
       masterArray: [], //holds all the entires that are visible.
       tempArray: [], //holds all the entries of a single GET.
+      //parameters for the rest API
+      filters: {
+        oe: "all",
+        dentistType: "404101+404103",
+        sortColumn: "id",
+        sortType: "ASC"
+      }     
     }
   },
   methods: {
@@ -38,8 +45,8 @@ export default {
   },
   mixins: [getData, infiniteScroll],
   mounted(){
-    //oe, offset, maxAvg,type,sortColumn, orderBy
-    this.getData("all", this.infiniteScrollCurrentOffset, 100, "404101+404103", "id", "ASC");
+    //oe, offset, maxAvg,dentist_type,sortColumn, orderBy
+    this.getData(this.filters.oe, this.infiniteScrollCurrentOffset, 100, this.filters.dentistType, this.filters.sortColumn, this.filters.sortType);
     this.scrolling();
 
     console.log()
