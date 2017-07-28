@@ -1,14 +1,29 @@
 
 <template>
   <div id="app">
-    <div v-if="tempArray.length > 0">
-    <div v-for="item in masterArray">
-      <div class="box">
-      <p>{{item.id}}</p>
-      <p>{{item.priimek_in_ime_zdravnika}}</p>
-      <p>{{item.naslov_izvajalca_prvi_del}}</p>
+    <md-toolbar id="toolbar">
+      <md-button class="md-icon-button">
+        <md-icon>menu</md-icon>
+      </md-button>
+    </md-toolbar>
+    <!--columns in the DB are id, sifra_oe, naziv_obmocne_enote_ali_izpostave, sifra_izvajalca, naziv_izvajalca, naslov_izvajalca_prvi_del, naslov_izvajalca_drugi_del, sifra_zdravnika,
+      priimek_in_ime_zdravnika, ZZZS_dejavnost, doseganje_povprecja, sifra_izpostave       -->
+    <div  class="wrapper">
+      <div v-for="item in masterArray">
+        <md-card>
+          <md-card-header>
+            <md-card-header-text>
+              <div class="md-title">{{item.priimek_in_ime_zdravnika}}</div>
+              <div class="md-subhead">{{item.naslov_izvajalca_prvi_del}}</div>
+              <div class="md-subhead">{{item.naslov_izvajalca_drugi_del}}</div>
+            </md-card-header-text>
+            <md-card-media>
+              <p>Doseganje povprečja:</p>
+              <h2>{{item.doseganje_povprecja.toFixed(2)}}%</h2>
+            </md-card-media>
+          </md-card-header>
+        </md-card>
       </div>
-    </div>
     </div>
   </div>
 </template>
@@ -55,37 +70,34 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+$main-bg-color: #15cabf;
+$main-light-font-color: #fafafa;
+$main-dark-font-color: #263238;
 
-h1, h2 {
-  font-weight: normal;
+#toolbar{
+  background-color: $main-bg-color;
+  color: $main-light-font-color;
+  margin-bottom: 50px;
 }
+ .wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+ }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-
-.box {
-  width: 25%;
+.md-card {
   height: 150px;
-  display: inline-block;
-  border: 1px solid black;
+  width: 500px;
+  margin: 0px 100px 25px 100px;
+  @media (max-width: 600px){
+    width: 310px;
+    height: 200px;
+  }
 }
+
 </style>

@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import throttle from 'lodash.throttle';
 
 const infiniteScroll = {
 	methods : { //_.throttle is from lodash and it throttles the eventlisteners from firing on every scroll event
