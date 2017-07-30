@@ -1,6 +1,6 @@
 
 import axios from "axios";
-const getData = {
+export default {
 	methods: {
 		getData: function(oe, offset, maxAvg,type,sortColumn, orderBy){
 			axios.get(`http://localhost:3000/Dentists/${oe}&offset=${offset}&maxAvg=${maxAvg}&type=${type}&${sortColumn}=${orderBy}`, {
@@ -19,4 +19,3 @@ const getData = {
 	}
 }
 
-export {getData};
