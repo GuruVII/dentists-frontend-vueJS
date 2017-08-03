@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import dentists from './../components/dentists.vue'
-import test from './../components/test.vue'
+import about from './../components/about.vue'
 
 
 Vue.use(Router)
@@ -14,9 +14,9 @@ export default new Router({
        component: dentists
      },
      {
-       path: '/test/',
-       name: 'test',
-       component: test,
+       path: '/about/',
+       name: 'about',
+       component: about,
      }
    ]
 })

@@ -1,25 +1,6 @@
 
 <template>
   <div>
-    <md-toolbar id="toolbar">
-      <md-button class="md-icon-button hide" @click="toggleLeftSidenav">
-        <md-icon>menu</md-icon>
-      </md-button>
-      <h2 class="md-title" style="flex: 1">Najdi Zobozdravnika</h2>
-      <md-button>Add</md-button>
-      <md-button>Remove</md-button>
-    </md-toolbar>
-
-  
-  <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
-    <md-toolbar class="md-small sidenav">
-      <div class="md-toolbar-container">
-        <h3 class="md-title">Sidenav content</h3>
-      </div>
-    </md-toolbar>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate esse necessitatibus beatae nobis, deserunt ut est fugit, tempora deleniti, eligendi commodi doloribus. Nemo, assumenda possimus, impedit inventore perferendis iusto!</p>
-  </md-sidenav>
-
     <!--columns in the DB are id, sifra_oe, naziv_obmocne_enote_ali_izpostave, sifra_izvajalca, naziv_izvajalca, naslov_izvajalca_prvi_del, naslov_izvajalca_drugi_del, sifra_zdravnika,
       priimek_in_ime_zdravnika, ZZZS_dejavnost, doseganje_povprecja, sifra_izpostave       -->
     <div  class="wrapper">
@@ -45,12 +26,11 @@
 <script>
 import getData from "./../mixins/getData";
 import infiniteScroll from "./../mixins/infiniteScroll";
-import sidenav from "./../mixins/sidenav"
 import _ from 'lodash';
 import throttle from 'lodash.throttle';
 
 export default {
-  name: 'app',
+  name: 'dentist',
   data() {
     return {
       infiniteScrollCurrentOffset:0,
@@ -73,7 +53,7 @@ export default {
                 window.addEventListener('scroll', this.infiniteScroll);
             }
   },
-  mixins: [getData, infiniteScroll, sidenav],
+  mixins: [getData, infiniteScroll],
   mounted(){
     //oe, offset, maxAvg,dentist_type,sortColumn, orderBy
     this.getData(this.filters.oe, this.infiniteScrollCurrentOffset, 100, this.filters.dentistType, this.filters.sortColumn, this.filters.sortType);
