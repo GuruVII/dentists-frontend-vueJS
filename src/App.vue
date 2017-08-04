@@ -38,8 +38,8 @@ export default {
 </script>
 
 <style lang="scss">
-$main-bg-color: #15cabf;
-$main-light-font-color: #fafafa;
+$main-bg-color: (#15cabf !important);
+$main-light-font-color: (#fafafa !important);
 $main-dark-font-color: #263238;
 body {
   overflow-y: -moz-scrollbars-vertical;
@@ -51,8 +51,9 @@ body {
   color: $main-light-font-color;
   width: 100%;
 }
-.sidenav {
+.md-toolbar {
   background-color: $main-bg-color;
+  color: $main-light-font-color;
 }
  .wrapper {
   display: -webkit-box;
@@ -76,10 +77,7 @@ body {
       height: 200px;
     }
   }
-  .md-button {
-    color: white !important;
-  }
- }
+}
 
 
 
