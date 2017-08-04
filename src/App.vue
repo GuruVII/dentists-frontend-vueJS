@@ -14,10 +14,21 @@
   <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
     <md-toolbar class="md-small sidenav">
       <div class="md-toolbar-container">
-        <h3 class="md-title">Sidenav content</h3>
+        <h3 class="md-title">Filtri</h3>
       </div>
     </md-toolbar>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nisi cupiditate esse necessitatibus beatae nobis, deserunt ut est fugit, tempora deleniti, eligendi commodi doloribus. Nemo, assumenda possimus, impedit inventore perferendis iusto!</p>
+
+    <div class="side-filter">Tip zobozdravnika:
+      <md-button-toggle>
+        <md-button id="adult" class="md-icon-button md-toggle"><md-icon>child_care</md-icon></md-button>
+        <md-button id="adult" class="md-icon-button md-toggle"><md-icon>face</md-icon></md-button>
+      </md-button-toggle>
+    </div>
+    <div class="side-filter">
+      Območna Enota:
+      <md-checkbox id="all-sidenav" name="all-sidenav" class="md-primary" value="allSelected">Izberi vse</md-checkbox>
+      <md-checkbox v-for="item in OE" @change="selected(item.id)">{{item.name}}</md-checkbox>
+    </div>
   </md-sidenav>
     <router-view></router-view>
     </div>
@@ -32,6 +43,37 @@ export default {
     currentPage: function(){
       return this.$route.name
     }
+  },methods: {
+    selected: function(OE){
+      console.log("A tole dela?")
+      let index = this.selectedOE.indexOf(OE)
+      if (index > -1){
+        this.selectedOE.splice(index, 1);
+      }
+      else {
+        this.selectedOE.push(OE)
+      }
+    },
+    test23: function(){
+      console.log("TESTSTAST")
+    }
+  },
+  data(){
+    return{
+      OE: [{name: "Celje", id: "210000" },
+      {name: "Koper", id: "220000" },
+      {name: "Krško", id: "230000" },
+      {name: "Kranj", id: "240000" },
+      {name: "Ljubljana", id: "250000" },
+      {name: "Maribor", id: "260000" },
+      {name: "Murska Sobota", id: "270000" },
+      {name: "Nova Gorica", id: "280000" },
+      {name: "Novo Mesto", id: "290000" },
+      {name: "Ravne na Koroškem", id: "300000" },
+      ],
+      allSelected: false,
+      selectedOE: []
+    }
   },
   mixins: [sidenav]
 }
@@ -41,6 +83,14 @@ export default {
 $main-bg-color: (#15cabf !important);
 $main-light-font-color: (#fafafa !important);
 $main-dark-font-color: #263238;
+@mixin flex-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+}
 body {
   overflow-y: -moz-scrollbars-vertical;
   overflow-y: scroll;
@@ -51,17 +101,21 @@ body {
   color: $main-light-font-color;
   width: 100%;
 }
-.md-toolbar {
+.md-sidenav-content{
+  .md-toolbar {
   background-color: $main-bg-color;
   color: $main-light-font-color;
+  }
+  .side-filter{ 
+    @include flex-box;
+    justify-content: space-evenly;
+    align-items: center;
+  }
 }
+
+
  .wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  flex-flow: row wrap;
+  @include flex-box;
   justify-content: space-evenly;
   @media(min-width: 600px){
     width: 80%;
