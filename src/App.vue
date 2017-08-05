@@ -26,8 +26,14 @@
     </div>
     <div class="side-filter">
       Območna Enota:
-      <md-checkbox id="all-sidenav" name="all-sidenav" class="md-primary" value="allSelected">Izberi vse</md-checkbox>
-      <md-checkbox v-for="item in OE" @change="selected(item.id)">{{item.name}}</md-checkbox>
+      <ul>
+        <li>
+          <md-checkbox id="all-sidenav" name="all-sidenav" class="md-primary" @change="selectAll" v-bind:checked="isChecked">Izberi vse</md-checkbox>
+        </li>
+        <li v-for="item in OE">
+          <md-checkbox @change="select(item.id)" :id="item.id" :value="item.id" :checked="isChecked">{{item.name}}</md-checkbox>
+        </li>
+      </ul>
     </div>
   </md-sidenav>
     <router-view></router-view>
@@ -43,9 +49,9 @@ export default {
     currentPage: function(){
       return this.$route.name
     }
-  },methods: {
-    selected: function(OE){
-      console.log("A tole dela?")
+  },
+  methods: {
+    select: function(OE){
       let index = this.selectedOE.indexOf(OE)
       if (index > -1){
         this.selectedOE.splice(index, 1);
@@ -54,13 +60,21 @@ export default {
         this.selectedOE.push(OE)
       }
     },
-    test23: function(){
-      console.log("TESTSTAST")
+    selectAll: function(){
+      if (this.selectedOE.length < this.OE.length){
+        this.selectedOE = []
+        this.OE.forEach((currentValue) => {
+          this.selectedOE.push(currentValue["id"])
+        })
+      } else {
+        this.selectedOE = []
+      }
     }
   },
   data(){
     return{
-      OE: [{name: "Celje", id: "210000" },
+      OE: [
+      {name: "Celje", id: "210000" },
       {name: "Koper", id: "220000" },
       {name: "Krško", id: "230000" },
       {name: "Kranj", id: "240000" },
@@ -71,8 +85,9 @@ export default {
       {name: "Novo Mesto", id: "290000" },
       {name: "Ravne na Koroškem", id: "300000" },
       ],
-      allSelected: false,
-      selectedOE: []
+      allSelected: true,
+      selectedOE: [],
+      isChecked: true
     }
   },
   mixins: [sidenav]
@@ -110,6 +125,32 @@ body {
     @include flex-box;
     justify-content: space-evenly;
     align-items: center;
+    ul{
+      margin: 0;
+      padding-left: 0px;
+      li{
+        margin-top: 0px;
+      list-style-type: none;
+      .md-checkbox{
+      margin: 0px 8px 0px 0px;
+      }
+      .md-theme-default{
+        &.md-checkbox{
+          &.md-checked{
+            .md-checkbox-container{
+              background-color: $main-bg-color;
+              border-color: $main-bg-color;
+              .md-ink-ripple{
+                color: $main-bg-color;
+              }
+            }
+          }
+        } 
+      }
+    }
+    }
+    
+    
   }
 }
 
