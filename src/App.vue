@@ -67,6 +67,7 @@ export default {
       }
     },
     select: function(OE){
+      //checks if entry in the selectedOE is there, if it is, it removes it from the array, if not, it pushes it in.
       let index = this.selectedOE.indexOf(OE)
       if (index > -1){
         this.selectedOE.splice(index, 1);
@@ -74,6 +75,7 @@ export default {
       else {
         this.selectedOE.push(OE)
       }
+      //if the number of entries in the slectedOE array is the same as in OE array, then all have been selected
       if (this.selectedOE.length < this.OE.length ){
         this.allSelected = false;
       } else {
