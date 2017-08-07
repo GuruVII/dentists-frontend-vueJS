@@ -28,10 +28,11 @@
       Območna Enota:
       <ul>
         <li>
-          <md-checkbox id="all-sidenav" name="all-sidenav" class="md-primary" @change="selectAll" v-bind:checked="isChecked">Izberi vse</md-checkbox>
+          <md-checkbox id="all-sidenav" name="all-sidenav" class="md-primary" @change="selectAll" v-model="allSelected">Izberi vse</md-checkbox>
         </li>
         <li v-for="item in OE">
-          <md-checkbox @change="select(item.id)" :id="item.id" :value="item.id" :checked="isChecked">{{item.name}}</md-checkbox>
+        <!-- having an array of object, each having a checked property isn't the suggested way of doing this, but the way from the documentation didn't work -->
+          <md-checkbox :id="item.id" :value="item.id" v-model="item.checked" @change="select(item.id)">{{item.name}}</md-checkbox>
         </li>
       </ul>
     </div>
@@ -51,6 +52,20 @@ export default {
     }
   },
   methods: {
+    //if not checkboxes are selected, select all of them, if all of them are selected, deselect them
+    selectAll: function(){
+      if (this.allSelected == false){
+        this.OE.forEach((currentValue) =>{
+          currentValue.checked = true;
+          this.selectedOE.push(currentValue.id);
+        })
+      } else {
+        this.OE.forEach((currentValue) =>{
+          currentValue.checked = false;
+        })
+        this.selectedOE = [];
+      }
+    },
     select: function(OE){
       let index = this.selectedOE.indexOf(OE)
       if (index > -1){
@@ -59,35 +74,29 @@ export default {
       else {
         this.selectedOE.push(OE)
       }
-    },
-    selectAll: function(){
-      if (this.selectedOE.length < this.OE.length){
-        this.selectedOE = []
-        this.OE.forEach((currentValue) => {
-          this.selectedOE.push(currentValue["id"])
-        })
+      if (this.selectedOE.length < this.OE.length ){
+        this.allSelected = false;
       } else {
-        this.selectedOE = []
+        this.allSelected = true;
       }
     }
   },
   data(){
     return{
       OE: [
-      {name: "Celje", id: "210000" },
-      {name: "Koper", id: "220000" },
-      {name: "Krško", id: "230000" },
-      {name: "Kranj", id: "240000" },
-      {name: "Ljubljana", id: "250000" },
-      {name: "Maribor", id: "260000" },
-      {name: "Murska Sobota", id: "270000" },
-      {name: "Nova Gorica", id: "280000" },
-      {name: "Novo Mesto", id: "290000" },
-      {name: "Ravne na Koroškem", id: "300000" },
+      {name: "Celje", id: "210000", checked: false },
+      {name: "Koper", id: "220000", checked: false },
+      {name: "Krško", id: "230000", checked: false },
+      {name: "Kranj", id: "240000", checked: false },
+      {name: "Ljubljana", id: "250000", checked: false },
+      {name: "Maribor", id: "260000", checked: false },
+      {name: "Murska Sobota", id: "270000", checked: false },
+      {name: "Nova Gorica", id: "280000", checked: false },
+      {name: "Novo Mesto", id: "290000", checked: false },
+      {name: "Ravne na Koroškem", id: "300000", checked: false },
       ],
-      allSelected: true,
-      selectedOE: [],
-      isChecked: true
+      allSelected: false,
+      selectedOE: []
     }
   },
   mixins: [sidenav]
