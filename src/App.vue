@@ -18,14 +18,22 @@
       </div>
     </md-toolbar>
 
-    <div class="side-filter">Tip zobozdravnika:
+    <div class="side-filter">
+      <div class="description">Tip zobozdravnika:</div>
       <md-button-toggle>
-        <md-button id="adult" class="md-icon-button md-toggle"><md-icon>child_care</md-icon></md-button>
-        <md-button id="adult" class="md-icon-button md-toggle"><md-icon>face</md-icon></md-button>
+        <md-button id="adult" class="md-icon-button">
+          <md-icon>child_care</md-icon>
+          <md-tooltip md-direction="left">za otroke</md-tooltip>
+        </md-button>       
+        <md-button id="adult" class="md-icon-button">
+          <md-icon>face</md-icon>
+          <md-tooltip md-direction="right">za odrasle</md-tooltip>
+        </md-button>
+       
       </md-button-toggle>
     </div>
     <div class="side-filter">
-      Območna Enota:
+      <div class="description OE-position">Območna Enota:</div>
       <ul>
         <li>
           <md-checkbox id="all-sidenav" name="all-sidenav" class="md-primary" @change="selectAll" v-model="allSelected">Izberi vse</md-checkbox>
@@ -134,14 +142,21 @@ body {
   }
   .side-filter{ 
     @include flex-box;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
+    .description{
+      width: 120px;
+      margin-left: 5px;
+      &.OE-position{
+        align-self: flex-start;
+        margin-top: 10px;
+      }
+    }
     ul{
-      margin: 0;
-      padding-left: 0px;
+      padding-left: 8px;
       li{
-        margin-top: 0px;
-      list-style-type: none;
+        //margin-top: 0px;
+        list-style-type: none;
       .md-checkbox{
       margin: 0px 8px 0px 0px;
       }
@@ -153,6 +168,10 @@ body {
               border-color: $main-bg-color;
               .md-ink-ripple{
                 color: $main-bg-color;
+                top: -8px;
+                right: -8px;
+                bottom: -8px;
+                left: -8px;
               }
             }
           }

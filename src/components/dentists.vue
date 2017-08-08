@@ -14,7 +14,7 @@
             </md-card-header-text>
             <md-card-media>
               <p>Doseganje povprečja:</p>
-              <h2>{{item.doseganje_povprecja.toFixed(2)}}%</h2>
+              <average :average="item.doseganje_povprecja"></average>
             </md-card-media>
           </md-card-header>
         </md-card>
@@ -28,6 +28,7 @@ import getData from "./../mixins/getData";
 import infiniteScroll from "./../mixins/infiniteScroll";
 import _ from 'lodash';
 import throttle from 'lodash.throttle';
+import average from "./decimalPointToComma.vue"
 
 export default {
   name: 'dentist',
@@ -47,6 +48,9 @@ export default {
         sortType: "ASC"
       }     
     }
+  },
+  components:{
+    average
   },
   methods: {
     scrolling: function(){
