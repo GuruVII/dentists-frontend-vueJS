@@ -23,11 +23,11 @@
         Tip zobozdravnika:
       </div>
       <md-button-toggle>
-        <md-button id="adult" class="md-icon-button">
+        <md-button id="child" class="md-icon-button"  @click="toggleType(0)">
           <md-icon>child_care</md-icon>
           <md-tooltip md-direction="left">za otroke</md-tooltip>
         </md-button>       
-        <md-button id="adult" class="md-icon-button">
+        <md-button id="adult" class="md-icon-button" @click="toggleType(1)">
           <md-icon>face</md-icon>
           <md-tooltip md-direction="right">za odrasle</md-tooltip>
         </md-button>
@@ -56,7 +56,7 @@
     </div>
     <div class="side-filter">
       <div class="description sort-by">
-        Sortiraj po:
+        Razvrsti po:
       </div>
       <ul>
         <li><md-radio v-model="sortBy" id="filter-by-surname" name="" md-value="priimek_in_ime_zdravnika">Priimku</md-radio></li>
@@ -64,6 +64,8 @@
         <li><md-radio v-model="sortBy" id="filter-by-average" name="my-test-group1" md-value="doseganje_povprecja">Doseganju Povprečja</md-radio></li>
       </ul>
     </div>
+    <i class="material-icons">arrow_downward</i>
+    <i class="material-icons">arrow_upward</i>    
   </md-sidenav>
     <router-view></router-view>
     </div>
@@ -109,6 +111,9 @@ export default {
       } else {
         this.allSelected = true;
       }
+    },
+    toggleType: function(type){
+      this.dentistType[type]['checked'] = !this.dentistType[type]['checked']
     }
   },
   data(){
@@ -127,6 +132,10 @@ export default {
       ],
       allSelected: false,
       selectedOE: [],
+      dentistType: [
+      {type: "child", id: "404103", checked: false},
+      {type: "adult", id: "404101", checked: false},     
+      ],
       maxAverage: "100",
       sortBy: "priimek_in_ime_zdravnika",
       ascOrDesc: "asc"
@@ -172,10 +181,11 @@ body {
       margin-left: 5px;
       &.OE-position{
         align-self: flex-start;
-        margin-top: 10px;
+        margin-top: 14px;
       }
       &.sort-by{
         align-self: flex-start;
+        margin-top: 14px;
       }
     }
     .number-input{
@@ -197,23 +207,37 @@ body {
         list-style-type: none;
         .md-checkbox{
         margin: 0px 8px 0px 0px;
-        }
+        }//this nesting is due to the framework used. The only reason this was done is because I'm using a custom colour.
         .md-theme-default{
           &.md-checkbox{
             &.md-checked{
               .md-checkbox-container{
                 background-color: $main-bg-color;
                 border-color: $main-bg-color;
+              }
+            }
+            .md-ink-ripple{
+              color: $main-bg-color;
+              top: -12px;
+              right: -12px;
+              bottom: -12px;
+              left: -12px;
+            }
+          }
+          &.md-radio{
+            margin: 0px;
+            &.md-checked{
+              .md-radio-container{
+                border-color: $main-bg-color;
+                &:after {
+                  background-color: $main-bg-color;
+                }
                 .md-ink-ripple{
                   color: $main-bg-color;
-                  top: -8px;
-                  right: -8px;
-                  bottom: -8px;
-                  left: -8px;
                 }
               }
             }
-          } 
+          }
         }
       } 
     }  
