@@ -9,7 +9,7 @@ export default {
   computed: {
     decimalPointToComma: function(){
       let avgWithPoint = `${this.average.toFixed(2)}%`;
-      let avgWithComma = avgWithPoint.replace(".", ",")
+      let avgWithComma = avgWithPoint.replace(".", ",");
       return avgWithComma
     }
   }

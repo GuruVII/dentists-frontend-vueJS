@@ -19,7 +19,9 @@
     </md-toolbar>
 
     <div class="side-filter">
-      <div class="description">Tip zobozdravnika:</div>
+      <div class="description">
+        Tip zobozdravnika:
+      </div>
       <md-button-toggle>
         <md-button id="adult" class="md-icon-button">
           <md-icon>child_care</md-icon>
@@ -33,15 +35,33 @@
       </md-button-toggle>
     </div>
     <div class="side-filter">
-      <div class="description OE-position">Območna Enota:</div>
+      <div class="description OE-position">
+        Območna Enota:
+      </div>
       <ul>
         <li>
           <md-checkbox id="all-sidenav" name="all-sidenav" class="md-primary" @change="selectAll" v-model="allSelected">Izberi vse</md-checkbox>
         </li>
-        <li v-for="item in OE">
+        <li v-for="item in OE" v-if="!allSelected">
         <!-- having an array of object, each having a checked property isn't the suggested way of doing this, but the way from the documentation didn't work -->
           <md-checkbox :id="item.id" :value="item.id" v-model="item.checked" @change="select(item.id)">{{item.name}}</md-checkbox>
         </li>
+      </ul>
+    </div>
+    <div class="side-filter">
+      <div class="description">
+        Max povprečja:
+      </div>
+        <input class="number-input" type="text" :placeholder="`${maxAverage}`" maxlength="3">&nbsp%
+    </div>
+    <div class="side-filter">
+      <div class="description sort-by">
+        Sortiraj po:
+      </div>
+      <ul>
+        <li><md-radio v-model="sortBy" id="filter-by-surname" name="" md-value="priimek_in_ime_zdravnika">Priimku</md-radio></li>
+        <li><md-radio v-model="sortBy" id="filter-by-place" name="my-test-group1" md-value="naslov_izvajalca_drugi_del">Kraju</md-radio></li>
+        <li><md-radio v-model="sortBy" id="filter-by-average" name="my-test-group1" md-value="doseganje_povprecja">Doseganju Povprečja</md-radio></li>
       </ul>
     </div>
   </md-sidenav>
@@ -106,7 +126,10 @@ export default {
       {name: "Ravne na Koroškem", id: "300000", checked: false },
       ],
       allSelected: false,
-      selectedOE: []
+      selectedOE: [],
+      maxAverage: "100",
+      sortBy: "priimek_in_ime_zdravnika",
+      ascOrDesc: "asc"
     }
   },
   mixins: [sidenav]
@@ -151,36 +174,49 @@ body {
         align-self: flex-start;
         margin-top: 10px;
       }
+      &.sort-by{
+        align-self: flex-start;
+      }
+    }
+    .number-input{
+      border-radius: 2px;
+      border: 2px solid rgba(0, 0, 0, 0.54);
+      width: 35px;
+      margin-left: 8px;
+      padding: 3px;
+      text-align: center;
+      &:focus{
+        border-color: $main-bg-color;
+        transition: all 0.2s cubic-bezier(0.55, 0, 0.55, 0.2);
+      }
     }
     ul{
       padding-left: 8px;
       li{
         //margin-top: 0px;
         list-style-type: none;
-      .md-checkbox{
-      margin: 0px 8px 0px 0px;
-      }
-      .md-theme-default{
-        &.md-checkbox{
-          &.md-checked{
-            .md-checkbox-container{
-              background-color: $main-bg-color;
-              border-color: $main-bg-color;
-              .md-ink-ripple{
-                color: $main-bg-color;
-                top: -8px;
-                right: -8px;
-                bottom: -8px;
-                left: -8px;
+        .md-checkbox{
+        margin: 0px 8px 0px 0px;
+        }
+        .md-theme-default{
+          &.md-checkbox{
+            &.md-checked{
+              .md-checkbox-container{
+                background-color: $main-bg-color;
+                border-color: $main-bg-color;
+                .md-ink-ripple{
+                  color: $main-bg-color;
+                  top: -8px;
+                  right: -8px;
+                  bottom: -8px;
+                  left: -8px;
+                }
               }
             }
-          }
-        } 
-      }
-    }
-    }
-    
-    
+          } 
+        }
+      } 
+    }  
   }
 }
 
