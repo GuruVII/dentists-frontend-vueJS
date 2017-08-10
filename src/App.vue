@@ -31,7 +31,6 @@
           <md-icon>face</md-icon>
           <md-tooltip md-direction="right">za odrasle</md-tooltip>
         </md-button>
-       
       </md-button-toggle>
     </div>
     <div class="side-filter">
@@ -63,13 +62,32 @@
         <li><md-radio v-model="sortBy" id="filter-by-place" name="my-test-group1" md-value="naslov_izvajalca_drugi_del">Kraju</md-radio></li>
         <li><md-radio v-model="sortBy" id="filter-by-average" name="my-test-group1" md-value="doseganje_povprecja">Doseganju Povprečja</md-radio></li>
       </ul>
+    </div> 
+    <div class="side-filter">
+      <div class="description">
+        Tip razvrstitve:
+      </div>
+      <md-button-toggle md-single>
+        <md-button class="md-icon-button md-toggle" @click="ascOrDesc = 'ASC'">
+          <md-icon>arrow_upward</md-icon>
+          <md-tooltip md-direction="left">Naraščujoče</md-tooltip>
+        </md-button>
+        <md-button class="md-icon-button" @click="ascOrDesc = 'DESC'">
+          <md-icon>arrow_downward</md-icon>
+          <md-tooltip md-direction="left">Padajoče</md-tooltip>
+        </md-button>
+      </md-button-toggle>
     </div>
-    <i class="material-icons">arrow_downward</i>
-    <i class="material-icons">arrow_upward</i>    
+    <div class="button-div">
+      <md-button class="md-raised">Filtriraj</md-button>
+    </div>
+    
   </md-sidenav>
+
     <router-view></router-view>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -138,7 +156,7 @@ export default {
       ],
       maxAverage: "100",
       sortBy: "priimek_in_ime_zdravnika",
-      ascOrDesc: "asc"
+      ascOrDesc: "ASC"
     }
   },
   mixins: [sidenav]
@@ -171,6 +189,17 @@ body {
   .md-toolbar {
   background-color: $main-bg-color;
   color: $main-light-font-color;
+  }
+  .button-div{
+    @include flex-box;
+    justify-content: flex-start;
+    margin-top: 16px;
+    .md-button{
+      &.md-raised{
+        background-color: $main-bg-color;
+        color: $main-light-font-color;
+      }
+    }
   }
   .side-filter{ 
     @include flex-box;
