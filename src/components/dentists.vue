@@ -32,6 +32,7 @@ import average from "./decimalPointToComma.vue"
 
 export default {
   name: 'dentist',
+  props: ["HTTPGETparameters"],
   data() {
     return {
       infiniteScrollCurrentOffset:0,
@@ -44,8 +45,9 @@ export default {
       filters: {
         oe: "all",
         dentistType: "404101+404103",
+        maxAvg: "100",
         sortColumn: "priimek_in_ime_zdravnika",
-        sortType: "ASC"
+        sortType: "ASC",      
       }     
     }
   },
@@ -57,13 +59,28 @@ export default {
                 window.addEventListener('scroll', this.infiniteScroll);
             }
   },
+  watch:{
+    HTTPGETparameters: function(){
+      //sets new filter parameters
+      this.filters.oe = this.HTTPGETparameters.oe;
+      this.filters.dentistType = this.HTTPGETparameters.dentistType;
+      this.filters.maxAvg = this.HTTPGETparameters.maxAvg;
+      this.filters.sortColumn = this.HTTPGETparameters.sortColumn;
+      this.filters.sortType = this.HTTPGETparameters.sortType;
+      //resets the current visible data and calls new data using new filter parameters
+      this.infiniteScrollCurrentOffset = 0;
+      this.infiniteScrollPage = 0;
+      this.tempArray = [];
+      this.masterArray = [];
+      this.getData(this.filters.oe, this.infiniteScrollCurrentOffset, this.filters.maxAvg, this.filters.dentistType, this.filters.sortColumn, this.filters.sortType);
+    }
+  },
   mixins: [getData, infiniteScroll],
   mounted(){
     //oe, offset, maxAvg,dentist_type,sortColumn, orderBy
-    this.getData(this.filters.oe, this.infiniteScrollCurrentOffset, 100, this.filters.dentistType, this.filters.sortColumn, this.filters.sortType);
+    this.getData(this.filters.oe, this.infiniteScrollCurrentOffset, this.filters.maxAvg, this.filters.dentistType, this.filters.sortColumn, this.filters.sortType);
     this.scrolling();
 
-    console.log()
   }
 }
 </script>

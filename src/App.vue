@@ -51,7 +51,7 @@
       <div class="description">
         Max povprečja:
       </div>
-        <input class="number-input" type="text" :placeholder="`${maxAverage}`" maxlength="3">&nbsp%
+        <input class="number-input" type="text" maxlength="3" v-model="maxAverage">&nbsp%
     </div>
     <div class="side-filter">
       <div class="description sort-by">
@@ -79,12 +79,12 @@
       </md-button-toggle>
     </div>
     <div class="button-div">
-      <md-button class="md-raised">Filtriraj</md-button>
+      <md-button class="md-raised" @click="createHTTPGETparameters">Filtriraj</md-button>
     </div>
     
   </md-sidenav>
 
-    <router-view></router-view>
+    <router-view :HTTPGETparameters = "HTTPGETparameters"></router-view>
     </div>
   </div>
 
@@ -132,6 +132,34 @@ export default {
     },
     toggleType: function(type){
       this.dentistType[type]['checked'] = !this.dentistType[type]['checked']
+    },
+    createHTTPGETparameters: function(){
+      //resets the parameter object. oe and dentists type are set, becuase of +=, as to avoid adding a string to undefined
+      this.HTTPGETparameters = {oe: "", dentistType: ""};
+      //cretes the parameter for the selected OEs
+      if ((this.allSelected == true) || (this.selectedOE.length == 0)){
+        this.HTTPGETparameters["oe"] = "all"
+      } else {
+        this.selectedOE.forEach((currentValue) => {
+          this.HTTPGETparameters["oe"] += `${currentValue}+` 
+        })
+      };
+      //creates the parameter for the dentist Type. If none are selected it assumes we want them all
+      if ((this.dentistType[0].checked) == false && (this.dentistType[1].checked == false)){
+        this.HTTPGETparameters["dentistType"] = "404101+404103"
+      } else {
+        this.dentistType.forEach((currentValue)=>{
+          if (currentValue.checked == true){
+            this.HTTPGETparameters["dentistType"] += `${currentValue["id"]}+`
+          }
+        })
+      }
+      // creates paramater for the highest average we wish to display
+      this.HTTPGETparameters["maxAvg"] = this.maxAverage;
+      // creates paramater for the sort by
+      this.HTTPGETparameters["sortColumn"] = this.sortBy;
+      //creates paramater for sort type
+      this.HTTPGETparameters["sortType"] = this.ascOrDesc;
     }
   },
   data(){
@@ -156,7 +184,8 @@ export default {
       ],
       maxAverage: "100",
       sortBy: "priimek_in_ime_zdravnika",
-      ascOrDesc: "ASC"
+      ascOrDesc: "ASC",
+      HTTPGETparameters: {},
     }
   },
   mixins: [sidenav]
