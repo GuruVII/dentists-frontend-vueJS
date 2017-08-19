@@ -25,7 +25,6 @@ export default {
 
 				}
 				while (i < this.infiniteScrollPerPage)
-				console.log("TEST")
 				window.scrollTo(0,document.body.scrollHeight);
 				//checks if the entire tempArray has be traversed, if so gets new data for the temp array
 				if ((((this.infiniteScrollPage + 1) * this.infiniteScrollPerPage) % this.infiniteScrollOffset) == 0 ){

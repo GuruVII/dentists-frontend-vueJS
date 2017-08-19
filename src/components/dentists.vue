@@ -105,6 +105,8 @@ $main-dark-font-color: #263238;
   display: flex;
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
+  //some browsers do not support space-evenly
+  justify-content: space-around;
   justify-content: space-evenly;
   @media(min-width: 600px){
     width: 80%;
@@ -114,6 +116,7 @@ $main-dark-font-color: #263238;
     height: 150px;
     width: 500px;
     margin: 0px 50px 25px 50px;
+    justify-content: space-around;
     justify-content: space-evenly;
     @media (max-width: 600px){
       width: 310px;
