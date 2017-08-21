@@ -89,6 +89,26 @@ export default {
 $main-bg-color: #15cabf;
 $main-light-font-color: #fafafa;
 $main-dark-font-color: #263238;
+@mixin flex-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  flex-flow: row wrap;
+}
+@mixin justify-content($position) {
+  -webkit-justify-content: $position;
+  justify-content: $position;
+}
+@mixin align-items($position){
+  -webkit-align-items: $position;
+  align-items: $position;
+}
+@mixin align-self($position){
+  -webkit-align-self: $position;
+  align-self: $position;
+}
 
 #toolbar{
   background-color: $main-bg-color;
@@ -99,15 +119,10 @@ $main-dark-font-color: #263238;
   background-color: $main-bg-color;
 }
  .wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-flex-flow: row wrap;
-  flex-flow: row wrap;
+  @include flex-box;
   //some browsers do not support space-evenly
-  justify-content: space-around;
-  justify-content: space-evenly;
+  @include justify-content(space-around);
+  @include justify-content(space-evenly);
   @media(min-width: 600px){
     width: 80%;
     margin: 50px auto 0 auto;
@@ -116,11 +131,15 @@ $main-dark-font-color: #263238;
     height: 150px;
     width: 500px;
     margin: 0px 50px 25px 50px;
-    justify-content: space-around;
-    justify-content: space-evenly;
+    @include justify-content(space-around);
+    @include justify-content(space-evenly);
     @media (max-width: 600px){
       width: 310px;
       height: 200px;
+    }
+    @media (max-width: 410px){
+      width: 300px;
+      margin: 15px 10px 10px 10px;
     }
   }
  }

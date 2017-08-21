@@ -6,8 +6,10 @@
         <md-icon>menu</md-icon>
       </md-button>
       <h2 class="md-title" style="flex: 1">Najdi Zobozdravnika</h2>
-      <router-link tag="md-button" to="/">Domov</router-link>
-      <router-link tag="md-button" to="/about/">O strani</router-link>
+      <div class="router-link-wrapper">
+        <router-link tag="md-button" to="/">Domov</router-link>
+        <router-link tag="md-button" to="/about/">O strani</router-link>
+      </div>
     </md-toolbar>
 
   
@@ -78,7 +80,7 @@
         </md-button>
       </md-button-toggle>
     </div>
-    <div class="button-div">
+    <div class="filter-button-wrapper">
       <md-button class="md-raised" @click="createHTTPGETparameters">Filtriraj</md-button>
     </div>
     
@@ -204,6 +206,18 @@ $main-dark-font-color: #263238;
   -webkit-flex-flow: row wrap;
   flex-flow: row wrap;
 }
+@mixin justify-content($position) {
+	-webkit-justify-content: $position;
+	justify-content: $position;
+}
+@mixin align-items($position){
+	-webkit-align-items: $position;
+	align-items: $position;
+}
+@mixin align-self($position){
+	-webkit-align-self: $position;
+	align-self: $position;
+}
 body {
   overflow-y: -moz-scrollbars-vertical;
   overflow-y: scroll;
@@ -213,15 +227,27 @@ body {
   background-color: $main-bg-color;
   color: $main-light-font-color;
   width: 100%;
+  .md-button{
+    @media(max-width: 414px){
+      padding: 0px;
+      min-width: 0px;
+    }
+  }
+  .md-title{
+    margin: 7px 0px 7px 8px;
+    @media(max-width: 414px){
+      margin-right: 50px;
+    }
+  }
 }
 .md-sidenav-content{
   .md-toolbar {
   background-color: $main-bg-color;
   color: $main-light-font-color;
   }
-  .button-div{
+  .filter-button-wrapper{
     @include flex-box;
-    justify-content: flex-start;
+    @include justify-content(flex-start);
     margin-top: 16px;
     .md-button{
       &.md-raised{
@@ -232,17 +258,18 @@ body {
   }
   .side-filter{ 
     @include flex-box;
-    justify-content: flex-start;
+    @include justify-content(flex-start);
+    @include align-items(center);
     align-items: center;
     .description{
       width: 120px;
       margin-left: 5px;
       &.OE-position{
-        align-self: flex-start;
+        @include align-self(flex-start);
         margin-top: 14px;
       }
       &.sort-by{
-        align-self: flex-start;
+        @include align-self(flex-start);
         margin-top: 14px;
       }
     }
