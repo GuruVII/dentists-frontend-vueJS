@@ -17,9 +17,11 @@
     <md-toolbar class="md-small sidenav">
       <div class="md-toolbar-container">
         <h3 class="md-title">Filtri</h3>
+          <md-button  @click="toggleLeftSidenav">
+            <md-icon>arrow_back</md-icon>
+          </md-button>
       </div>
     </md-toolbar>
-
     <div class="side-filter">
       <div class="description">
         Tip zobozdravnika:
@@ -27,7 +29,7 @@
       <md-button-toggle>
         <md-button id="child" class="md-icon-button"  @click="toggleType(0)">
           <md-icon>child_care</md-icon>
-          <md-tooltip md-direction="left">za otroke</md-tooltip>
+          <md-tooltip md-direction="left">za mladino</md-tooltip>
         </md-button>       
         <md-button id="adult" class="md-icon-button" @click="toggleType(1)">
           <md-icon>face</md-icon>
@@ -82,6 +84,10 @@
     </div>
     <div class="filter-button-wrapper">
       <md-button class="md-raised" @click="createHTTPGETparameters">Filtriraj</md-button>
+      <md-button  @click="toggleLeftSidenav">
+        <md-icon>arrow_back</md-icon>
+      </md-button>
+
     </div>
     
   </md-sidenav>
@@ -244,10 +250,16 @@ body {
   .md-toolbar {
   background-color: $main-bg-color;
   color: $main-light-font-color;
+    .md-toolbar-container{
+      justify-content: space-between;
+      .md-button{
+        min-width: 0px;
+      }
+    }
   }
   .filter-button-wrapper{
     @include flex-box;
-    @include justify-content(flex-start);
+    @include justify-content(space-between);
     margin-top: 16px;
     .md-button{
       &.md-raised{

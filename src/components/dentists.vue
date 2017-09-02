@@ -11,6 +11,16 @@
               <div class="md-title">{{item.priimek_in_ime_zdravnika}}</div>
               <div class="md-subhead">{{item.naslov_izvajalca_prvi_del}}</div>
               <div class="md-subhead">{{item.naslov_izvajalca_drugi_del}}</div>
+              <div class="md-subhead">Tip zobozdravnika: 
+                <span v-if="item.ZZZS_dejavnost == 404101">
+                    <md-tooltip md-direction="right">zobozdravnik za odrasle</md-tooltip>
+                    <md-icon>face</md-icon>
+                </span>
+                <span  v-if="item.ZZZS_dejavnost == 404103">
+                <md-tooltip md-direction="right">zobozdravnik za mladino</md-tooltip>
+                  <md-icon>child_care</md-icon>
+                </span>
+              </div>
             </md-card-header-text>
             <md-card-media>
               <p>Doseganje povprečja:</p>
