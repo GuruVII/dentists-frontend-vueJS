@@ -1,18 +1,20 @@
 
 <template>
   <div id="app">
+  <!-- TOP TOOLBAR-->
       <md-toolbar id="toolbar">
-      <md-button class="md-icon-button" @click="toggleLeftSidenav" v-if="currentPage != 'about'">
+      <md-button class="md-icon-button smaller-screen-display" @click="toggleLeftSidenav" v-if="currentPage != 'about'">
         <md-icon>menu</md-icon>
       </md-button>
       <h2 class="md-title" style="flex: 1">Najdi Zobozdravnika</h2>
       <div class="router-link-wrapper">
         <router-link tag="md-button" to="/">Domov</router-link>
+        <md-button class="larger-screen-display" @click="toggleLeftSidenav">Filtri</md-button>
         <router-link tag="md-button" to="/about/">O strani</router-link>
       </div>
     </md-toolbar>
 
-  
+  <!-- SIDENAV -->
   <md-sidenav class="md-left" ref="leftSidenav" @open="open('Left')" @close="close('Left')">
     <md-toolbar class="md-small sidenav">
       <div class="md-toolbar-container">
@@ -91,7 +93,7 @@
     </div>
     
   </md-sidenav>
-
+    <!--ROUTER VIEW -->
     <router-view :HTTPGETparameters = "HTTPGETparameters"></router-view>
     </div>
   </div>
@@ -237,6 +239,16 @@ body {
     @media(max-width: 414px){
       padding: 0px;
       min-width: 0px;
+    }
+    &.smaller-screen-display{
+      @media(min-width: 990px){
+        display: none;
+      }
+    }
+    &.larger-screen-display{
+      @media(max-width: 989px){
+        display: none;
+      }
     }
   }
   .md-title{
