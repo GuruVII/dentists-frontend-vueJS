@@ -35,69 +35,69 @@
             </md-card>
         </div>
     </div>
-    </div>
+</div>
 </template>
 
 <script>
-import getData from "./../mixins/getData";
-import infiniteScroll from "./../mixins/infiniteScroll";
-import _ from 'lodash';
 import throttle from 'lodash.throttle';
-import average from "./decimalPointToComma.vue"
+import getData from './../mixins/getData';
+import infiniteScroll from './../mixins/infiniteScroll';
+import _ from 'lodash';
+import average from './decimalPointToComma.vue';
 
 export default {
-  name: 'dentist',
-  props: ["HTTPGETparameters"],
-  data() {
+    name: 'dentist',
+    props: ['HTTPGETparameters'],
+    data() {
     return {
-      infiniteScrollCurrentOffset:0,
+      infiniteScrollCurrentOffset: 0,
       infiniteScrollOffset: 100,
       infiniteScrollPage: 0,
-      infiniteScrollPerPage: 20, //how many items are loaded per page
-      masterArray: [], //holds all the entires that are visible.
-      tempArray: [], //holds all the entries of a single GET.
-      //parameters for the rest API
+      infiniteScrollPerPage: 20, //how many items are loaded per page   
+      masterArray: [], //holds all the entires that are visible.    
+      tempArray: [], //holds all the entries of a single GET.   
+      //parameters for the rest API 
       filters: {
-        oe: "all",
-        dentistType: "404101+404103",
-        maxAvg: "100",
-        sortColumn: "priimek_in_ime_zdravnika",
-        sortType: "ASC",      
-      }     
-    }
+        oe: 'all',
+        dentistType: '404101+404103',
+        maxAvg: '100',
+        sortColumn: 'priimek_in_ime_zdravnika',
+        sortType: 'ASC',
+      },
+    };
   },
-  components:{
-    average
+  components: {
+    average,
   },
   methods: {
-    scrolling: function(){
-                window.addEventListener('scroll', this.infiniteScroll);
-            }
+    scrolling: function () {
+        window.addEventListener('scroll', this.infiniteScroll);
+    },
   },
   watch:{
-    HTTPGETparameters: function(){
-      //sets new filter parameters
+    HTTPGETparameters: function () {
+      //sets new filter parameters  
       this.filters.oe = this.HTTPGETparameters.oe;
       this.filters.dentistType = this.HTTPGETparameters.dentistType;
       this.filters.maxAvg = this.HTTPGETparameters.maxAvg;
       this.filters.sortColumn = this.HTTPGETparameters.sortColumn;
       this.filters.sortType = this.HTTPGETparameters.sortType;
-      //resets the current visible data and calls new data using new filter parameters
+      //resets the current visible data and calls new data using new filter parameters  
       this.infiniteScrollCurrentOffset = 0;
       this.infiniteScrollPage = 0;
       this.tempArray = [];
       this.masterArray = [];
       this.getData(this.filters.oe, this.infiniteScrollCurrentOffset, this.filters.maxAvg, this.filters.dentistType, this.filters.sortColumn, this.filters.sortType);
-    }
+    },
   },
   mixins: [getData, infiniteScroll],
-  mounted(){
-    //oe, offset, maxAvg,dentist_type,sortColumn, orderBy
+  mounted() {
+    //oe, offset, maxAvg,dentist_type,sortColumn, orderBy   
     this.getData(this.filters.oe, this.infiniteScrollCurrentOffset, this.filters.maxAvg, this.filters.dentistType, this.filters.sortColumn, this.filters.sortType);
     this.scrolling();
+  },
+};
 
-  }
-}
 </script>
 
 <style lang="scss">
