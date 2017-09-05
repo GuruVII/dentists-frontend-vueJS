@@ -46,9 +46,9 @@ import _ from 'lodash';
 import average from './decimalPointToComma.vue';
 
 export default {
-    name: 'dentist',
-    props: ['HTTPGETparameters'],
-    data() {
+  name: 'dentist',
+  props: ['HTTPGETparameters'],
+  data() {
     return {
       infiniteScrollCurrentOffset: 0,
       infiniteScrollOffset: 100,

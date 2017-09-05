@@ -96,6 +96,8 @@
             </md-button>
         </div>
     </md-sidenav>
+    <!-- COOKIE WARNING -->
+    <cookie-warning class="cookie-warning-position" v-if="cookieWarningShow" @allowCookiesEvent="allowCookies"></cookie-warning>
     <!--ROUTER VIEW -->
     <router-view :HTTPGETparameters = "HTTPGETparameters"></router-view>
 </div>
@@ -103,8 +105,12 @@
 
 <script>
 import sidenav from './mixins/sidenav';
+import cookieWarning from './components/cookieWarning.vue'
 export default {
     name: 'app',
+    components: {
+        cookieWarning,
+    },
     computed: {
         currentPage: function () {
             return this.$route.name;
@@ -174,9 +180,36 @@ export default {
             //creates paramater for sort type
             this.HTTPGETparameters['sortType'] = this.ascOrDesc;
         },
+        analytics: function () {
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+            })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+            ga('create', 'ID GOES HERE', 'auto');
+            ga('send', 'pageview');
+        },
+        allowCookies : function (trueOrFalse) {
+            if (trueOrFalse) {
+                this.analytics();
+                this.cookieWarningShow = false;
+            } else {
+                this.cookieWarningShow = false;
+            }
+        },
+        checkForPreviousCookie: function () {
+            //checks if the user has previously allowed cookies on this webpage
+            if (document.cookie.indexOf('dentistsPageUserAllowsCookies') !== -1) {
+                this.analytics();
+                this.cookieWarningShow = false;
+            }
+        },
+    },
+    mounted () {
+        this.checkForPreviousCookie();
     },
     data() {
         return {
+            cookieWarningShow: true,
             OE: [
                 {
                     name: 'Celje',
@@ -247,6 +280,7 @@ export default {
             sortBy: 'priimek_in_ime_zdravnika',
             ascOrDesc: 'ASC',
             HTTPGETparameters: {},
+            potato: false,
         };
     },
     mixins: [sidenav],
@@ -426,4 +460,8 @@ body {
         }
     }
 }
+
 </style>
+
+
+
