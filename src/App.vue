@@ -9,7 +9,7 @@
         <h2 class="md-title" style="flex: 1">Najdi Zobozdravnika</h2>
         <div class="router-link-wrapper">
             <router-link tag="md-button" to="/">Domov</router-link>
-            <md-button class="larger-screen-display" @click="toggleLeftSidenav">Filtri</md-button>
+            <md-button class="larger-screen-display" @click="toggleLeftSidenav" v-if="currentPage != 'about'">Filtri</md-button>
             <router-link tag="md-button" to="/about/">O strani</router-link>
         </div>
     </md-toolbar>
@@ -97,20 +97,24 @@
             </md-button>          
         </div>
     </md-sidenav>
+    <!--LODING SCREEN -->
+    <loading-screen v-if="loadingDataState" :errorInLoadingData="errorInLoadingData" @tryAgainEvent="tryAgain"></loading-screen>
     <!-- COOKIE WARNING -->
     <cookie-warning class="cookie-warning-position" v-if="cookieWarningShow" @allowCookiesEvent="allowCookies"></cookie-warning>
     <!--ROUTER VIEW -->
-    <router-view :HTTPGETparameters = "HTTPGETparameters"></router-view>
+    <router-view :HTTPGETparameters="HTTPGETparameters" @loadingDataEvent="loadingData" @loadingDataErrorEvent="loadingDataError" :tryAgainState="tryAgainState"></router-view>
 </div>
 </template>
 
 <script>
 import sidenav from './mixins/sidenav';
 import cookieWarning from './components/cookieWarning.vue'
+import loadingScreen from './components/loadingScreen.vue'
 export default {
     name: 'app',
     components: {
         cookieWarning,
+        loadingScreen,
     },
     computed: {
         currentPage: function () {
@@ -215,7 +219,21 @@ export default {
             this.sortBy = 'priimek_in_ime_zdravnika';
             this.ascOrDesc = 'ASC';
             this.createHTTPGETparameters();
-        }
+        },
+        loadingData: function (trueOrFalse) {
+            //the timeout function is added so that the loading screen doesn't appear for a really tiny fraction of a second
+            if (trueOrFalse === false ){
+                setTimeout( () => { this.loadingDataState = trueOrFalse; }, 350)
+            } else {
+                this.loadingDataState = trueOrFalse;
+            }           
+        },
+        loadingDataError: function (trueOrFalse) {
+            this.errorInLoadingData = trueOrFalse;
+        },
+        tryAgain: function () {
+            this.tryAgainState += 1;
+        } 
     },
     mounted () {
         this.checkForPreviousCookie();
@@ -293,10 +311,14 @@ export default {
             sortBy: 'priimek_in_ime_zdravnika',
             ascOrDesc: 'ASC',
             HTTPGETparameters: {},
+            loadingDataState: false,
+            errorInLoadingData: false,
+            tryAgainState: 0,
         };
     },
     watch: {
         maxAverage: function () {
+            //ensures that only numbers can be put in the the input
             this.maxAverage = this.maxAverage.replace(/\D/g,'');
         },
     },

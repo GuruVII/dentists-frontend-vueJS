@@ -5,7 +5,7 @@ export default {
         infiniteScroll: _.throttle(function(){
             //determines how far away you are from the top of the screen. It is written this way becuase none work in every browser.
             var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0; 
-            //if the screen is 200px from the edge or if the page jsut started (thus offset is 0), do the code
+            //if the screen is 200px from the edge or if the page just started (thus offset is 0), do the code
             if ((window.innerHeight + scrollTop) > (document.body.offsetHeight - 200)){
                 let i = 0;
                 let index;
@@ -37,7 +37,7 @@ export default {
                 }; 
             }
             // timeout between events
-        }, 500),
+        }, 50),
 
     },
 };
