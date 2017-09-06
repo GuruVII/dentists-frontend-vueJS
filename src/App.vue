@@ -90,10 +90,11 @@
             </md-button-toggle>
         </div>
         <div class="filter-button-wrapper">
+            <md-button class="" @click="defaultSettings">Ponastavi filtre</md-button>
             <md-button class="md-raised" @click="createHTTPGETparameters">Filtriraj</md-button>
             <md-button  @click="toggleLeftSidenav">
                 <md-icon>arrow_back</md-icon>
-            </md-button>
+            </md-button>          
         </div>
     </md-sidenav>
     <!-- COOKIE WARNING -->
@@ -203,6 +204,18 @@ export default {
                 this.cookieWarningShow = false;
             }
         },
+        defaultSettings: function () { //function sets all filters back to default
+            //If allSelected is true, then selectAll uncheckes all fields, but doesn't set allSelected to false, which means we have to do it
+            this.allSelected = true;
+            this.selectAll();
+            this.allSelected = false;
+            this.dentistType[0].checked = false;
+            this.dentistType[1].checked = false;
+            this.maxAverage = '100';
+            this.sortBy = 'priimek_in_ime_zdravnika';
+            this.ascOrDesc = 'ASC';
+            this.createHTTPGETparameters();
+        }
     },
     mounted () {
         this.checkForPreviousCookie();
@@ -280,8 +293,12 @@ export default {
             sortBy: 'priimek_in_ime_zdravnika',
             ascOrDesc: 'ASC',
             HTTPGETparameters: {},
-            potato: false,
         };
+    },
+    watch: {
+        maxAverage: function () {
+            this.maxAverage = this.maxAverage.replace(/\D/g,'');
+        },
     },
     mixins: [sidenav],
 };
@@ -292,13 +309,13 @@ export default {
 $main-bg-color: (#15cabf !important);
 $main-light-font-color: (#fafafa !important);
 $main-dark-font-color: #263238;
-@mixin flex-box {
+@mixin flex-box($flex-flow) {
     display: -webkit-box;
     display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
-    -webkit-flex-flow: row wrap;
-    flex-flow: row wrap;
+    -webkit-flex-flow: $flex-flow;
+    flex-flow: $flex-flow;
 }
 @mixin justify-content($position) {
     -webkit-justify-content: $position;
@@ -356,7 +373,7 @@ body {
         }
     }
     .filter-button-wrapper {
-        @include flex-box;
+        @include flex-box(row-reverse wrap);
         @include justify-content(space-between);
         margin-top: 16px;
         .md-button{
@@ -367,7 +384,7 @@ body {
         }
     }
     .side-filter { 
-        @include flex-box;
+        @include flex-box(row wrap);
         @include justify-content(flex-start);
         @include align-items(center);
         align-items: center;
@@ -441,7 +458,7 @@ body {
 
 
 .wrapper {
-    @include flex-box;
+    @include flex-box(row wrap);
     //some browsers do not support space-evenlyjustify-content: space-around;
     justify-content: space-evenly;
     @media(min-width:600px) {
