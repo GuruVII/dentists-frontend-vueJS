@@ -91,7 +91,7 @@
         </div>
         <div class="filter-button-wrapper">
             <md-button class="" @click="defaultSettings">Ponastavi filtre</md-button>
-            <md-button class="md-raised" @click="createHTTPGETparameters">Filtriraj</md-button>
+            <md-button class="md-raised" @click="createHTTPGETparameters(); toggleLeftSidenav()">Filtriraj</md-button>
             <md-button  @click="toggleLeftSidenav">
                 <md-icon>arrow_back</md-icon>
             </md-button>          
