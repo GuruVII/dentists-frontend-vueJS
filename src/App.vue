@@ -314,6 +314,9 @@ export default {
             loadingDataState: false,
             errorInLoadingData: false,
             tryAgainState: 0,
+            hideTextAboutAverage: true,
+            hideButtonAboutAverage: false,
+
         };
     },
     watch: {
@@ -477,8 +480,6 @@ body {
         }  
     }
 }
-
-
 .wrapper {
     @include flex-box(row wrap);
     //some browsers do not support space-evenlyjustify-content: space-around;

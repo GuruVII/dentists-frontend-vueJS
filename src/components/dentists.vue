@@ -26,7 +26,7 @@
                     <md-card-media>
                         <div class="tooltip">
                             <md-icon>info_outline</md-icon>
-                            <md-tooltip md-direction="top">Doseganje povprečja pove če je zobozdravnik že dosegel povprečjje, pir katerem mu ni potrebno več jemati novih pacientov.</md-tooltip>
+                            <md-tooltip md-direction="top">Doseganje povprečja pove, ali zobozdravnik sme zavrniti zavarovanca, ker že ima dovolj zavarovancev. Zavračati lahko začne nad 110% doseganja povprečja</md-tooltip>
                         </div>
                         <p>Doseganje povprečja:</p>
                         <average :average="item.doseganje_povprecja"></average>
@@ -151,6 +151,11 @@ $main-dark-font-color: #263238;
         width: 80%;
         margin: 50px auto 0 auto;
     }
+    .average-explained {
+        width: 100%;
+        text-align: center;
+        color: $main-dark-font-color;
+    }
     .md-card {
         height: 150px;
         width: 500px;
@@ -172,6 +177,7 @@ $main-dark-font-color: #263238;
                 @include icon-size(13px);
                 margin-right: 0px;
                 margin-bottom: -5px;
+                cursor: pointer;
             }
         }
         .md-card-media {
